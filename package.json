@@ -15,7 +15,9 @@
     "react": "16.13.1",
     "react-dom": "^17.0.1",
     "react-native": "0.63.3",
-    "react-native-web": "^0.14.8"
+    "react-native-web": "^0.14.8",
+    "socket.io-client": "^3.0.3",
+    "webrtc-adapter": "^7.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -29,6 +31,7 @@
     "html-webpack-plugin": "^4.5.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.64.0",
+    "react-native-webrtc": "^1.87.1",
     "react-test-renderer": "16.13.1",
     "style-loader": "^2.0.0",
     "webpack": "^5.8.0",

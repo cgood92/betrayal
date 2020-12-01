@@ -1,19 +1,47 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import {Button, Provider, Toast} from '@ant-design/react-native';
+import {View, StyleSheet} from 'react-native';
+import {Provider} from '@ant-design/react-native';
 
-export default function App() {
+import useBroadcaster from './webrtc/use-broadcaster';
+import useMyStream from './webrtc/use-my-stream';
+import usePeersWatching from './webrtc/use-peers-watching';
+
+import PeerVideo from './PeerVideo';
+import ErrorBoundary from './ErrorBoundary';
+
+const styles = StyleSheet.create({
+  flexContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+function App() {
+  const myVideoStream = useMyStream();
+  const peersWatching = usePeersWatching();
+  useBroadcaster();
+
+  const videos = [myVideoStream]
+    .concat(Object.values(peersWatching))
+    .filter(Boolean);
+
   return (
     <Provider>
-      <View>
-        <Text>Hello world!</Text>
-        <Button
-          onPress={() => Toast.info('Button was clicked!')}
-          style={{flex: 1}}
-          type="primary">
-          This is a button
-        </Button>
+      <View style={styles.flexContainer}>
+        {videos.map((stream, index) => (
+          <PeerVideo key={stream.id} index={index} stream={stream} />
+        ))}
       </View>
     </Provider>
+  );
+}
+
+export default function AppWithErrorBoundary() {
+  return (
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
   );
 }

@@ -1,9 +1,11 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './index.web.js',
+  entry: ['./index.web.js'],
+  devtool: 'source-map',
   devServer: {
     open: true,
+    hot: true,
   },
   module: {
     rules: [
