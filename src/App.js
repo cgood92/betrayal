@@ -1,38 +1,25 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Provider} from '@ant-design/react-native';
+import {Button, Provider} from '@ant-design/react-native';
+import {NativeRouter, useHistory} from 'react-router-native';
 
-import useBroadcaster from './webrtc/use-broadcaster';
-import useMyStream from './webrtc/use-my-stream';
-import usePeersWatching from './webrtc/use-peers-watching';
-
-import PeerVideo from './PeerVideo';
 import ErrorBoundary from './ErrorBoundary';
 
 const styles = StyleSheet.create({
-  flexContainer: {
+  navContainer: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
 });
 
 function App() {
-  const myVideoStream = useMyStream();
-  const peersWatching = usePeersWatching();
-  useBroadcaster();
-
-  const videos = [myVideoStream]
-    .concat(Object.values(peersWatching))
-    .filter(Boolean);
+  const history = useHistory();
 
   return (
     <Provider>
-      <View style={styles.flexContainer}>
-        {videos.map((stream, index) => (
-          <PeerVideo key={stream.id} index={index} stream={stream} />
-        ))}
+      <View style={styles.navContainer}>
+        <Button onPress={() => history.push('/join')}>Join a game</Button>
+        <Button onPress={() => history.push('/host')}>Host a game</Button>
       </View>
     </Provider>
   );
@@ -41,7 +28,9 @@ function App() {
 export default function AppWithErrorBoundary() {
   return (
     <ErrorBoundary>
-      <App />
+      <NativeRouter>
+        <App />
+      </NativeRouter>
     </ErrorBoundary>
   );
 }

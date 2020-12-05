@@ -1,3 +1,4 @@
+const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -6,6 +7,9 @@ module.exports = {
   devServer: {
     open: true,
     hot: true,
+    contentBase: path.join(__dirname, 'public'),
+    historyApiFallback: true,
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -22,6 +26,9 @@ module.exports = {
   },
   plugins: [new HtmlWebPackPlugin({template: './public/index.html'})],
   resolve: {
-    alias: {'react-native$': 'react-native-web'},
+    alias: {
+      'react-native$': 'react-native-web',
+      'react-router-native$': path.resolve(__dirname, 'src/react-router.js'),
+    },
   },
 };
