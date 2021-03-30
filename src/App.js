@@ -10,7 +10,7 @@ function App() {
   return (
     <Provider>
       <Switch>
-        <Route path="/host">
+        <Route path="/host/:gameId?">
           <HostGame />
         </Route>
         <Route path="/">
